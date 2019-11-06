@@ -1,0 +1,16 @@
+{
+  "name": "damn-theme-syntax",
+  "theme": "damn-theme-syntax",
+  "version": "0.1.2",
+  "description": "A dark syntax theme based theme with html/css colors inspired by dark mode of Chrome Developer Tools syntax highlight",
+  "keywords": [
+    "dark",
+    "blue",
+    "syntax"
+  ],
+  "repository": "",
+  "license": "MIT",
+  "engines": {
+    "atom": ">0.50.0"
+  }
+}
