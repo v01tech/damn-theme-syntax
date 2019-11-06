@@ -1,9 +1,31 @@
 .syntax--source.syntax--python {
     .syntax--keyword.syntax--operator.syntax--logical.syntax--python {
-        color: @hue-3;
+        color: @hue-5-2;
+    }
+
+    .syntax--entity.syntax--name.syntax--function {
+        color: @hue-2;
+    }
+
+    .syntax--storage.syntax--type.syntax--function {
+        color: @hue-1;
     }
 
     .syntax--variable.syntax--parameter {
         color: @hue-6;
+    }
+
+    .syntax--support.syntax--function {
+        color: @tag;
+    }
+
+    .syntax--keyword.syntax--control {
+        &.syntax--return {
+            color: @hue-4;
+        }
+    }
+
+    .syntax--string.syntax--quoted {
+        color: @hue-6-2;
     }
 }
