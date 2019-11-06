@@ -7,46 +7,46 @@
 @syntax-xml-doctype: #d9d9d9;
 @syntax-xml-cdata: lighten(@syntax-html-string, 15%);
 
-.punctuation.definition.tag.html {
+.syntax--punctuation.syntax--definition.syntax--tag.syntax--html {
     color: @syntax-html-tag;
 }
 
-.meta.tag.sgml.html {
-    .punctuation.definition.tag.html {
+.syntax--meta.syntax--tag.syntax--sgml.syntax--html {
+    .syntax--punctuation.syntax--definition.syntax--tag.syntax--html {
         color: @syntax-html-sgml;
     }
 }
 
-.string.quoted.double.html,
-.string.quoted.single.html {
+.syntax--string.syntax--quoted.syntax--double.syntax--html,
+.syntax--string.syntax--quoted.syntax--single.syntax--html {
     color: @syntax-html-string;
 }
 // XML
 
-.meta.tag.preprocessor.xml {
-    .entity.name.tag.xml {
+.syntax--meta.syntax--tag.syntax--preprocessor.syntax--xml {
+    .syntax--entity.syntax--name.syntax--tag.syntax--xml {
         color: @syntax-xml-doctype;
     }
 }
 
-.meta.tag.sgml.doctype.xml {
-    .keyword.other.doctype.xml,
-    .variable.language.documentroot.xml {
-        color: @syntax-xml-doctype;
+.syntax--meta.syntax--tag.syntax--sgml.syntax--doctype.syntax--xml {
+    .syntax--keyword.syntax--other.syntax--doctype.syntax--xml,
+    .syntax--meta.syntax--tag.syntax--sgml.syntax--doctype.syntax--xml {
+        .syntax--variable.syntax--language.syntax--documentroot.syntax--xml {
+            color: @syntax-xml-doctype;
+        }
     }
 }
 
-.punctuation.definition.tag.xml {
+.syntax--punctuation.syntax--definition.syntax--tag.syntax--xml {
     color: @syntax-html-tag;
 }
 
-.meta.tag.preprocessor.xml,
-.meta.tag.sgml.doctype.xml {
-    .punctuation.definition.tag.xml {
-        color: @syntax-html-sgml;
-    }
+.syntax--meta.syntax--tag.syntax--preprocessor.syntax--xml .syntax--punctuation.syntax--definition.syntax--tag.syntax--xml,
+.syntax--meta.syntax--tag.syntax--sgml.syntax--doctype.syntax--xml .syntax--punctuation.syntax--definition.syntax--tag.syntax--xml {
+    color: @syntax-html-sgml;
 }
 
-.string.unquoted.cdata.xml {
+.syntax--string.syntax--unquoted.syntax--cdata.syntax--xml {
     color: @syntax-xml-cdata;
 }
