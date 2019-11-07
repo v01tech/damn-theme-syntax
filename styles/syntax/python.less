@@ -1,31 +1,718 @@
+// Config -----------------------------------
+@syntax-hue: 220;
+@syntax-saturation: 13%;
+@syntax-brightness: 18%; // Monochrome -----------------------------------
+@monochrome: hsl(@syntax-hue, 14%, 71%); // default text
+@monochrome2: hsl(@syntax-hue, 9%, 55%);
+@fadegrey: hsl(@syntax-hue, 10%, 40%); // comments
+// Colors -----------------------------------
+@teal: hsl(175, 47%, 45%); // for built-ins, magic methods, types etc.
+@orange: hsl(29, 54%, 61%); // Class name color in class def and various misc uses (such as the curly braces in f-strings, constants, the ellipsis, etc.)
+@yellow: hsl(39, 67%, 69%); // for 'class', 'def', and 'lambda' keywords
+@lightblue: hsl(207, 88%, 75%); // for singletons (None, True, False), numeric literals (1, 1.5, 2e3, etc.), and, arithmetic operators (+, -, *, /, //, %, etc.)
+@darkblue: hsl(207, 62%, 45%); // for functions and method names in defs, as well as in calls
+@lightpurple: hsl(286, 60%, 67%); // for flow control (for, while, if, else, try, except, finally, with, raise), and imports
+@darkpurple: hsl(259, 37%, 60%); // for function and method arguments (except those highlighted especially as lightred), and all assignment operators (=, +=, etc.)
+@lightgreen: hsl(95, 38%, 62%); // for strings
+@darkgreen: hsl(121, 32%, 40%); // for logical operators (and, or, not, in), comparison operators (==, !=, >, <, etc.) and bitwise operators (&, |, ~, etc.). Basically anything that resolves to True or False.
+@lightred: hsl(355, 65%, 65%); // nice hue for important non-keyword variable names like 'self', 'cls', etc.
+@darkred: hsl(5, 48%, 51%); // jarring hue for errors
+// Base colors -----------------------------------
+@syntax-fg: @monochrome;
+@syntax-bg: hsl(@syntax-hue, @syntax-saturation, @syntax-brightness);
+@syntax-gutter: darken(@syntax-fg, 26%);
+@syntax-guide: fade(@syntax-fg, 15%);
+@syntax-accent: hsl(@syntax-hue, 100%, 66%);
+
 .syntax--source.syntax--python {
+    // Comments ------------------------------------------------------------------------------------------------------------------------------------------------------
+    // .syntax--comment.syntax--line.syntax--number-sign.syntax--python {
+    //     color: @monochrome;
+    //  }
+    //
+    // .syntax--comment.syntax--regexp {
+    //     color: @monochrome;
+    //  }
+    //
+    // .syntax--comment.syntax--typehint.syntax--directive.syntax--notation.syntax--python {
+    //     color: @monochrome;
+    //  }
+    //
+    // .syntax--comment.syntax--typehint.syntax--ignore.syntax--notation.syntax--python {
+    //     color: @monochrome;
+    //  }
+    //
+    // .syntax--comment.syntax--typehint.syntax--punctuation.syntax--notation.syntax--python {
+    //     color: @monochrome;
+    //  }
+    //
+    // .syntax--comment.syntax--typehint.syntax--type.syntax--notation.syntax--python {
+    //     color: @monochrome;
+    //  }
+    //
+    // .syntax--comment.syntax--typehint.syntax--variable.syntax--notation.syntax--python {
+    //     color: @monochrome;
+    //  }
+    // Constants ------------------------------------------------------------------------------------------------------------------------------------------------------
+    // .syntax--constant.syntax--character.syntax--escape.syntax--python {
+    //     color: @monochrome;
+    //  }
+    // !!!REGEX!!! Color of the escape character '/' and whatever immediately follows it
+    .syntax--constant.syntax--character.syntax--escape.syntax--regexp {
+        color: @lightblue;
+    }
+    //
+    // .syntax--constant.syntax--character.syntax--format.syntax--placeholder.syntax--other.syntax--python {
+    //     color: @monochrome;
+    //  }
+    // !!!REGEX!!! The contents of character sets (anything inside square brackets)
+    .syntax--constant.syntax--character.syntax--set.syntax--regexp {
+        color: @darkblue;
+    }
+    //
+    // .syntax--constant.syntax--character.syntax--unicode.syntax--regexp {
+    //     color: @monochrome;
+    //  }
+    // Singletons like None, True, False?
+    .syntax--constant.syntax--language.syntax--python {
+        color: @lightblue;
+    }
+    //
+    // .syntax--constant.syntax--numeric.syntax--bin.syntax--python {
+    //     color: @monochrome;
+    //  }
+    //
+    // .syntax--constant.syntax--numeric.syntax--dec.syntax--python {
+    //     color: @monochrome;
+    //  }
+    //
+    // .syntax--constant.syntax--numeric.syntax--float.syntax--python {
+    //     color: @monochrome;
+    //  }
+    //
+    // .syntax--constant.syntax--numeric.syntax--hex.syntax--python {
+    //     color: @monochrome;
+    //  }
+    //
+    // .syntax--constant.syntax--numeric.syntax--oct.syntax--python {
+    //     color: @monochrome;
+    //  }
+    // numeric literals (int, float, etc.)
+    .syntax--constant.syntax--numeric.syntax--python {
+        color: @lightblue;
+    }
+    //
+    // .syntax--constant.syntax--other.syntax--caps.syntax--python {
+    //     color: @monochrome;
+    //  }
+    //
+    // .syntax--constant.syntax--other.syntax--ellipsis.syntax--python {
+    //     color: @monochrome;
+    //  }
+    // seems to affect the square brackets in a character group, but isn't necessary as it is handled elsewhere
+    // .syntax--constant.syntax--other.syntax--set.syntax--regexp {
+    //     color: @monochrome;
+    //  }
+    // Entities ------------------------------------------------------------------------------------------------------------------------------------------------------
+    // .syntax--entity.syntax--name.syntax--function.syntax--decorator.syntax--python {
+    //     color: @monochrome;
+    //  }
+    //
+    // .syntax--entity.syntax--name.syntax--function.syntax--python {
+    //     color: @monochrome;
+    //  }
+    // !!!REGEX!!! named backreferences (such as '(?P=name)')
+    .syntax--entity.syntax--name.syntax--tag.syntax--backreference.syntax--regexp {
+        color: @darkpurple;
+    }
+    // !!!REGEX!!! backreferences like '\1'
+    .syntax--entity.syntax--name.syntax--tag.syntax--named.syntax--backreference.syntax--regexp {
+        color: @darkpurple;
+    }
+    // !!!REGEX!!! name of a named group (e.g. (?P<name>))
+    .syntax--entity.syntax--name.syntax--tag.syntax--named.syntax--group.syntax--regexp {
+        color: @orange;
+    }
+    // class name in class def
+    .syntax--entity.syntax--name.syntax--type.syntax--class.syntax--python {
+        color: @orange;
+    }
+
+    .syntax--entity.syntax--other.syntax--inherited-class.syntax--python {
+        color: @orange;
+    }
+    // Invalids ------------------------------------------------------------------------------------------------------------------------------------------------------
+    // Deprecateds
+    .syntax--invalid.syntax--deprecated.syntax--backtick.syntax--python {
+        color: @darkred;
+    }
+
+    .syntax--invalid.syntax--deprecated.syntax--prefix.syntax--python {
+        color: @darkred;
+    }
+
+    .syntax--invalid.syntax--deprecated.syntax--semicolon.syntax--python {
+        color: @darkred;
+    }
+    // Illegals ------------------------------------------------------------------------------------------------------------------------------------------------------
+    .syntax--invalid.syntax--illegal.syntax--annotation.syntax--python {
+        color: @darkred;
+    }
+
+    .syntax--invalid.syntax--illegal.syntax--brace.syntax--python {
+        color: @darkred;
+    }
+
+    .syntax--invalid.syntax--illegal.syntax--dec.syntax--python {
+        color: @darkred;
+    }
+
+    .syntax--invalid.syntax--illegal.syntax--decorator.syntax--python {
+        color: @darkred;
+    }
+
+    .syntax--invalid.syntax--illegal.syntax--line.syntax--continuation.syntax--python {
+        color: @darkred;
+    }
+
+    .syntax--invalid.syntax--illegal.syntax--name.syntax--python {
+        color: @darkred;
+    }
+
+    .syntax--invalid.syntax--illegal.syntax--newline.syntax--python {
+        color: @darkred;
+    }
+
+    .syntax--invalid.syntax--illegal.syntax--operator.syntax--python {
+        color: @darkred;
+    }
+
+    .syntax--invalid.syntax--illegal.syntax--prefix.syntax--python {
+        color: @darkred;
+    }
+    // Keywords ------------------------------------------------------------------------------------------------------------------------------------------------------
+    // .syntax--keyword.syntax--codetag.syntax--notation.syntax--python {
+    //     color: @monochrome;
+    //  }
+    // flow control operators (with, if, elif, else, return, raise)
+    .syntax--keyword.syntax--control.syntax--flow.syntax--python {
+        color: @lightpurple;
+    }
+    //
+    // .syntax--keyword.syntax--control.syntax--import.syntax--python {
+    //     color: @monochrome;
+    //  }
+    //
+    // .syntax--keyword.syntax--illegal.syntax--name.syntax--python {
+    //     color: @monochrome;
+    //  }
+    //
+    .syntax--keyword.syntax--operator.syntax--arithmetic.syntax--python {
+        color: @lightblue;
+    }
+    //
+    .syntax--keyword.syntax--operator.syntax--assignment.syntax--python {
+        color: @darkpurple;
+    }
+    // bitwise operators (&, |, ^, ~, <<, >>)
+    .syntax--keyword.syntax--operator.syntax--bitwise.syntax--python {
+        color: @darkgreen;
+    }
+    // comparison operators (==, !=, >, <, >=, <=)
+    .syntax--keyword.syntax--operator.syntax--comparison.syntax--python {
+        color: @darkgreen;
+    }
+    //
+    // .syntax--keyword.syntax--operator.syntax--conditional.syntax--negative.syntax--regexp {
+    //     color: @monochrome;
+    //  }
+    //
+    // .syntax--keyword.syntax--operator.syntax--conditional.syntax--regexp {
+    //     color: @monochrome;
+    //  }
+    //
+    // .syntax--keyword.syntax--operator.syntax--disjunction.syntax--regexp {
+    //     color: @monochrome;
+    //  }
+    // logical operators (not, and, or, in, is)
     .syntax--keyword.syntax--operator.syntax--logical.syntax--python {
-        color: @hue-5-2;
+        color: @darkgreen;
     }
-
-    .syntax--entity.syntax--name.syntax--function {
-        color: @hue-2;
+    // !!!REGEX!!! negative Lookahead operator (?!)
+    .syntax--keyword.syntax--operator.syntax--lookahead.syntax--negative.syntax--regexp {
+        color: @lightred;
     }
-
-    .syntax--storage.syntax--type.syntax--function {
-        color: @hue-1;
+    // !!!REGEX!!! Lookahead operator (?=)
+    .syntax--keyword.syntax--operator.syntax--lookahead.syntax--regexp {
+        color: @lightgreen;
     }
-
-    .syntax--variable.syntax--parameter {
-        color: @hue-6;
+    // !!!REGEX!!! negative Lookbehind operator (?<!)
+    .syntax--keyword.syntax--operator.syntax--lookbehind.syntax--negative.syntax--regexp {
+        color: @lightred;
     }
-
-    .syntax--support.syntax--function {
-        color: @tag;
+    // !!!REGEX!!! Lookbehind operator (?<=)
+    .syntax--keyword.syntax--operator.syntax--lookbehind.syntax--regexp {
+        color: @lightgreen;
     }
-
-    .syntax--keyword.syntax--control {
-        &.syntax--return {
-            color: @hue-4;
-        }
+    // !!!REGEX!!! The negation operator '^', when used at the start of a group (in square brackets)
+    .syntax--keyword.syntax--operator.syntax--negation.syntax--regexp {
+        color: @darkred;
     }
-
-    .syntax--string.syntax--quoted {
-        color: @hue-6-2;
+    // Any operators not caught by other colours?
+    .syntax--keyword.syntax--operator.syntax--python {
+        color: @darkpurple;
+    }
+    // !!!REGEX!!! Quantifiers such as '*', '+', '?', '{1,3}', etc.
+    .syntax--keyword.syntax--operator.syntax--quantifier.syntax--regexp {
+        color: @darkgreen;
+    }
+    // no idea
+    // .syntax--keyword.syntax--operator.syntax--unpacking.syntax--arguments.syntax--python {
+    //     color: @darkpurple;
+    //  }
+    // no idea
+    // .syntax--keyword.syntax--operator.syntax--unpacking.syntax--parameter.syntax--python {
+    //     color: @darkpurple;
+    //  }
+    // Meta ------------------------------------------------------------------------------------------------------------------------------------------------------
+    // named backreferences (such as '(?P=name)') (Doesn't seem to work)
+    // .syntax--meta.syntax--backreference.syntax--named.syntax--regexp {
+    //     color: @darkpurple;
+    //  }
+    //
+    // backreferences like '\1' (Doesn't seem to work)
+    // .syntax--meta.syntax--backreference.syntax--regexp {
+    //     color: @darkpurple;
+    //  }
+    // !!!REGEX!!! The actual square brackets themselves in a character set (not the contents)
+    .syntax--meta.syntax--character.syntax--set.syntax--regexp {
+        color: @darkblue;
+    }
+    //
+    // .syntax--meta.syntax--class.syntax--inheritance.syntax--python {
+    //     color: @monochrome;
+    //  }
+    // Unsure what it does, but leaving it orange for now
+    .syntax--meta.syntax--class.syntax--python {
+        color: @orange;
+    }
+    //
+    // .syntax--meta.syntax--format.syntax--brace.syntax--python {
+    //     color: @monochrome;
+    //  }
+    //
+    // .syntax--meta.syntax--format.syntax--percent.syntax--python {
+    //     color: @monochrome;
+    //  }
+    //
+    // .syntax--meta.syntax--fstring.syntax--python {
+    //     color: @monochrome;
+    //  }
+    // colour of a function or method in when being called
+    .syntax--meta.syntax--function-call.syntax--generic.syntax--python {
+        color: @darkblue;
+    }
+    // affects too much, certain properties and certain vars inside f-strings
+    // .syntax--meta.syntax--function-call.syntax--python {
+    //     color: @monochrome;
+    //  }
+    //
+    // .syntax--meta.syntax--function.syntax--decorator.syntax--python {
+    //     color: @monochrome;
+    //  }
+    // affects the commas, typehints, and probably default variables used inside function defs
+    // .syntax--meta.syntax--function.syntax--parameters.syntax--python {
+    //     color: @monochrome;
+    //  }
+    // doesn't seem to do anything?
+    // .syntax--meta.syntax--function.syntax--python {
+    //     color: @monochrome;
+    //  }
+    // item access and indexing
+    // .syntax--meta.syntax--item-access.syntax--python {
+    //     color: @monochrome;
+    //  }
+    //
+    // .syntax--meta.syntax--lambda-function.syntax--python {
+    //     color: @monochrome;
+    //  }
+    // Doesn't seem to do anything
+    // .syntax--meta.syntax--named.syntax--regexp {
+    //     color: @monochrome;
+    //  }
+    //
+    // .syntax--meta.syntax--typehint.syntax--comment.syntax--python {
+    //     color: @monochrome;
+    //  }
+    // Punctuation ------------------------------------------------------------------------------------------------------------------------------------------------------
+    // doesn't seem to do anything
+    // .syntax--punctuation.syntax--character.syntax--set.syntax--begin.syntax--regexp {
+    //     color: @monochrome;
+    //  }
+    // doesn't seem to do anything
+    // .syntax--punctuation.syntax--character.syntax--set.syntax--end.syntax--regexp {
+    //     color: @monochrome;
+    //  }
+    //
+    // .syntax--punctuation.syntax--comment.syntax--begin.syntax--regexp {
+    //     color: @monochrome;
+    //  }
+    //
+    // .syntax--punctuation.syntax--comment.syntax--end.syntax--regexp {
+    //     color: @monochrome;
+    //  }
+    //
+    // .syntax--punctuation.syntax--definition.syntax--arguments.syntax--begin.syntax--python {
+    //     color: @monochrome;
+    //  }
+    //
+    // .syntax--punctuation.syntax--definition.syntax--arguments.syntax--end.syntax--python {
+    //     color: @monochrome;
+    //  }
+    //
+    // .syntax--punctuation.syntax--definition.syntax--comment.syntax--python {
+    //     color: @monochrome;
+    //  }
+    //
+    // .syntax--punctuation.syntax--definition.syntax--decorator.syntax--python {
+    //     color: @monochrome;
+    //  }
+    //
+    // .syntax--punctuation.syntax--definition.syntax--dict.syntax--begin.syntax--python {
+    //     color: @monochrome;
+    //  }
+    //
+    // .syntax--punctuation.syntax--definition.syntax--dict.syntax--end.syntax--python {
+    //     color: @monochrome;
+    //  }
+    //
+    // .syntax--punctuation.syntax--definition.syntax--inheritance.syntax--begin.syntax--python {
+    //     color: @monochrome;
+    //  }
+    //
+    // .syntax--punctuation.syntax--definition.syntax--inheritance.syntax--end.syntax--python {
+    //     color: @monochrome;
+    //  }
+    //
+    // .syntax--punctuation.syntax--definition.syntax--list.syntax--begin.syntax--python {
+    //     color: @monochrome;
+    //  }
+    //
+    // .syntax--punctuation.syntax--definition.syntax--list.syntax--end.syntax--python {
+    //     color: @monochrome;
+    //  }
+    //
+    // .syntax--punctuation.syntax--definition.syntax--parameters.syntax--begin.syntax--python {
+    //     color: @monochrome;
+    //  }
+    //
+    // .syntax--punctuation.syntax--definition.syntax--parameters.syntax--end.syntax--python {
+    //     color: @monochrome;
+    //  }
+    //
+    // .syntax--punctuation.syntax--definition.syntax--string.syntax--begin.syntax--python {
+    //     color: @monochrome;
+    //  }
+    //
+    // .syntax--punctuation.syntax--definition.syntax--string.syntax--end.syntax--python {
+    //     color: @monochrome;
+    //  }
+    //
+    // .syntax--punctuation.syntax--parenthesis.syntax--backreference.syntax--named.syntax--begin.syntax--regexp {
+    //     color: @monochrome;
+    //  }
+    //
+    // .syntax--punctuation.syntax--parenthesis.syntax--backreference.syntax--named.syntax--end.syntax--regexp {
+    //     color: @monochrome;
+    //  }
+    //
+    // .syntax--punctuation.syntax--parenthesis.syntax--begin.syntax--python {
+    //     color: @monochrome;
+    //  }
+    // !!!REGEX!!! change color of the opening bracket of regex groups (the ones with round brackets, not character sets with square brackets!)
+    .syntax--punctuation.syntax--parenthesis.syntax--begin.syntax--regexp {
+        color: @darkpurple;
+    }
+    //
+    // .syntax--punctuation.syntax--parenthesis.syntax--conditional.syntax--begin.syntax--regexp {
+    //     color: @monochrome;
+    //  }
+    //
+    // .syntax--punctuation.syntax--parenthesis.syntax--conditional.syntax--end.syntax--regexp {
+    //     color: @monochrome;
+    //  }
+    //
+    // .syntax--punctuation.syntax--parenthesis.syntax--end.syntax--python {
+    //     color: @monochrome;
+    //  }
+    // !!!REGEX!!! change color of the closing bracket of regex groups (the ones with round brackets, not character sets with square brackets!)
+    .syntax--punctuation.syntax--parenthesis.syntax--end.syntax--regexp {
+        color: @darkpurple;
+    }
+    //
+    // .syntax--punctuation.syntax--parenthesis.syntax--lookahead.syntax--begin.syntax--regexp {
+    //     color: @monochrome;
+    //  }
+    //
+    // .syntax--punctuation.syntax--parenthesis.syntax--lookahead.syntax--end.syntax--regexp {
+    //     color: @monochrome;
+    //  }
+    //
+    // .syntax--punctuation.syntax--parenthesis.syntax--lookbehind.syntax--begin.syntax--regexp {
+    //     color: @monochrome;
+    //  }
+    //
+    // .syntax--punctuation.syntax--parenthesis.syntax--lookbehind.syntax--end.syntax--regexp {
+    //     color: @monochrome;
+    //  }
+    //
+    // .syntax--punctuation.syntax--parenthesis.syntax--named.syntax--begin.syntax--regexp {
+    //     color: @monochrome;
+    //  }
+    //
+    // .syntax--punctuation.syntax--parenthesis.syntax--named.syntax--end.syntax--regexp {
+    //     color: @monochrome;
+    //  }
+    //
+    // .syntax--punctuation.syntax--parenthesis.syntax--non-capturing.syntax--begin.syntax--regexp {
+    //     color: @monochrome;
+    //  }
+    //
+    // .syntax--punctuation.syntax--parenthesis.syntax--non-capturing.syntax--end.syntax--regexp {
+    //     color: @monochrome;
+    //  }
+    //
+    // .syntax--punctuation.syntax--section.syntax--class.syntax--begin.syntax--python {
+    //     color: @monochrome;
+    //  }
+    // ?
+    // .syntax--punctuation.syntax--section.syntax--function.syntax--begin.syntax--python {
+    //     color: @yellow;
+    //  }
+    //
+    // .syntax--punctuation.syntax--section.syntax--function.syntax--lambda.syntax--begin.syntax--python {
+    //     color: @monochrome;
+    //  }
+    //
+    // .syntax--punctuation.syntax--separator.syntax--annotation.syntax--python {
+    //     color: @monochrome;
+    //  }
+    //
+    // .syntax--punctuation.syntax--separator.syntax--annotation.syntax--result.syntax--python {
+    //     color: @monochrome;
+    //  }
+    //
+    // .syntax--punctuation.syntax--separator.syntax--arguments.syntax--python {
+    //     color: @monochrome;
+    //  }
+    //
+    // .syntax--punctuation.syntax--separator.syntax--colon.syntax--python {
+    //     color: @monochrome;
+    //  }
+    //
+    // .syntax--punctuation.syntax--separator.syntax--continuation.syntax--line.syntax--python {
+    //     color: @monochrome;
+    //  }
+    //
+    // .syntax--punctuation.syntax--separator.syntax--dict.syntax--python {
+    //     color: @monochrome;
+    //  }
+    //
+    // .syntax--punctuation.syntax--separator.syntax--element.syntax--python {
+    //     color: @monochrome;
+    //  }
+    //
+    // .syntax--punctuation.syntax--separator.syntax--inheritance.syntax--python {
+    //     color: @monochrome;
+    //  }
+    //
+    // .syntax--punctuation.syntax--separator.syntax--parameters.syntax--python {
+    //     color: @monochrome;
+    //  }
+    //
+    // .syntax--punctuation.syntax--separator.syntax--period.syntax--python {
+    //     color: @monochrome;
+    //  }
+    //
+    // .syntax--punctuation.syntax--separator.syntax--slice.syntax--python {
+    //     color: @monochrome;
+    //  }
+    // Storage ------------------------------------------------------------------------------------------------------------------------------------------------------
+    // .syntax--storage.syntax--modifier.syntax--declaration.syntax--python {
+    //     color: @monochrome;
+    // }
+    //
+    // .syntax--storage.syntax--modifier.syntax--flag.syntax--regexp {
+    //     color: @monochrome;
+    //  }
+    // class keyword color
+    .syntax--storage.syntax--type.syntax--class.syntax--python {
+        color: @yellow;
+    }
+    //
+    // .syntax--storage.syntax--type.syntax--format.syntax--python {
+    //     color: @monochrome;
+    //  }
+    //
+    // .syntax--storage.syntax--type.syntax--function.syntax--async.syntax--python {
+    //     color: @monochrome;
+    //  }
+    //
+    // .syntax--storage.syntax--type.syntax--function.syntax--lambda.syntax--python {
+    //     color: @monochrome;
+    //  }
+    // color of the actual 'def' keyword
+    .syntax--storage.syntax--type.syntax--function.syntax--python {
+        color: @yellow;
+    }
+    //
+    // .syntax--storage.syntax--type.syntax--imaginary.syntax--number.syntax--python {
+    //     color: @monochrome;
+    //  }
+    //
+    // .syntax--storage.syntax--type.syntax--number.syntax--python {
+    //     color: @monochrome;
+    //  }
+    //
+    // .syntax--storage.syntax--type.syntax--string.syntax--python {
+    //     color: @monochrome;
+    //  }
+    // String ------------------------------------------------------------------------------------------------------------------------------------------------------
+    // .syntax--string.syntax--interpolated.syntax--python {
+    //     color: @monochrome;
+    //  }
+    //
+    // .syntax--string.syntax--quoted.syntax--binary.syntax--multi.syntax--python {
+    //     color: @monochrome;
+    //  }
+    //
+    // .syntax--string.syntax--quoted.syntax--binary.syntax--single.syntax--python {
+    //     color: @monochrome;
+    //  }
+    //
+    // .syntax--string.syntax--quoted.syntax--docstring.syntax--multi.syntax--python {
+    //     color: @monochrome;
+    //  }
+    //
+    // .syntax--string.syntax--quoted.syntax--docstring.syntax--raw.syntax--multi.syntax--python {
+    //     color: @monochrome;
+    //  }
+    //
+    // .syntax--string.syntax--quoted.syntax--docstring.syntax--raw.syntax--single.syntax--python {
+    //     color: @monochrome;
+    //  }
+    //
+    // .syntax--string.syntax--quoted.syntax--docstring.syntax--single.syntax--python {
+    //     color: @monochrome;
+    //  }
+    //
+    // .syntax--string.syntax--quoted.syntax--multi.syntax--python {
+    //     color: @monochrome;
+    //  }
+    //
+    // .syntax--string.syntax--quoted.syntax--raw.syntax--binary.syntax--multi.syntax--python {
+    //     color: @monochrome;
+    //  }
+    //
+    // .syntax--string.syntax--quoted.syntax--raw.syntax--binary.syntax--single.syntax--python {
+    //     color: @monochrome;
+    //  }
+    //
+    // .syntax--string.syntax--quoted.syntax--raw.syntax--multi.syntax--python {
+    //     color: @monochrome;
+    //  }
+    //
+    // .syntax--string.syntax--quoted.syntax--raw.syntax--single.syntax--python {
+    //     color: @monochrome;
+    //  }
+    //
+    // .syntax--string.syntax--quoted.syntax--single.syntax--python {
+    //     color: @monochrome;
+    //  }
+    //
+    // .syntax--string.syntax--regexp.syntax--quoted.syntax--multi.syntax--python {
+    //     color: @monochrome;
+    //  }
+    //
+    // .syntax--string.syntax--regexp.syntax--quoted.syntax--single.syntax--python {
+    //     color: @monochrome;
+    //  }
+    // Support ------------------------------------------------------------------------------------------------------------------------------------------------------
+    // builtin functions like 'any', 'all', 'len' etc.
+    .syntax--support.syntax--function.syntax--builtin.syntax--python {
+        color: @teal;
+    }
+    // magic methods like '__init__', '__call__', '__iter__', etc.
+    .syntax--support.syntax--function.syntax--magic.syntax--python {
+        color: @teal;
+    }
+    // !!!REGEX!!! Escaped characters representing special character sets (such as \d, \D, \w, \W, etc.)
+    .syntax--support.syntax--other.syntax--escape.syntax--special.syntax--regexp {
+        color: @lightpurple;
+    }
+    // !!!REGEX!!! The '.' (dot) operator, which matches anything
+    .syntax--support.syntax--other.syntax--match.syntax--any.syntax--regexp {
+        color: @lightpurple;
+    }
+    // !!!REGEX!!! The '^' operator, which matches the start of a string
+    .syntax--support.syntax--other.syntax--match.syntax--begin.syntax--regexp {
+        color: @yellow;
+    }
+    // !!!REGEX!!! The '$' operator, which matches the end of a string
+    .syntax--support.syntax--other.syntax--match.syntax--end.syntax--regexp {
+        color: @yellow;
+    }
+    // no idea
+    // .syntax--support.syntax--other.syntax--parenthesis.syntax--regexp {
+    //     color: @monochrome;
+    //  }
+    // for exceptions
+    .syntax--support.syntax--type.syntax--exception.syntax--python {
+        color: @darkred;
+    }
+    // 'metaclass' keyword argument in a class definition
+    // .syntax--support.syntax--type.syntax--metaclass.syntax--python {
+    //     color: @darkpurple;
+    //  }
+    // builtin types like 'str', 'int', 'bool' etc.
+    .syntax--support.syntax--type.syntax--python {
+        color: @teal;
+    }
+    // magic variables like '__future__', '__name__', '__file__', etc.
+    .syntax--support.syntax--variable.syntax--magic.syntax--python {
+        color: @teal;
+    }
+    // Variables ------------------------------------------------------------------------------------------------------------------------------------------------------
+    // cls
+    .syntax--variable.syntax--language.syntax--special.syntax--cls.syntax--python {
+        color: @lightred;
+    }
+    // self
+    .syntax--variable.syntax--language.syntax--special.syntax--self.syntax--python {
+        color: @lightred;
+    }
+    //
+    .syntax--variable.syntax--legacy.syntax--builtin.syntax--python {
+        color: @monochrome;
+    }
+    // superclass name in class def
+    // .syntax--variable.syntax--parameter.syntax--class.syntax--python {
+    //     color: @monochrome;
+    //  }
+    // param names in func calls
+    .syntax--variable.syntax--parameter.syntax--function-call.syntax--python {
+        color: @darkpurple;
+    }
+    // param names in defs
+    .syntax--variable.syntax--parameter.syntax--function.syntax--language.syntax--python {
+        color: @darkpurple;
+    }
+    // cls param in defs
+    .syntax--variable.syntax--parameter.syntax--function.syntax--language.syntax--special.syntax--cls.syntax--python {
+        color: @lightred;
+    }
+    // self param in defs
+    .syntax--variable.syntax--parameter.syntax--function.syntax--language.syntax--special.syntax--self.syntax--python {
+        color: @lightred;
     }
 }
